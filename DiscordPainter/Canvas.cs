@@ -10,7 +10,7 @@ namespace DiscordPainter
 {
     class Canvas
     {
-        private int[][] tiles;
+        public int[][] tiles { get; private set; }
 
         public Canvas()
         {

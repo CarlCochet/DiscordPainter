@@ -16,6 +16,7 @@ namespace DiscordPainter
         private Gui gui;
         private bool colorMode;
         private Canvas canvas;
+        private bool pressed;
 
 
         public void Run()
@@ -23,9 +24,14 @@ namespace DiscordPainter
             var mode = new VideoMode(Utils.WIDTH, Utils.HEIGHT);
             window = new RenderWindow(mode, "Discord Painter");
             window.Closed += (_, __) => window.Close();
+            window.MouseButtonPressed += Window_MouseButtonPressed;
+            window.MouseMoved += Window_MouseMoved;
+            window.MouseButtonReleased += Window_MouseButtonReleased;
 
             gui = new Gui(window);
             canvas = new Canvas();
+
+            pressed = false;
 
             CreateGUI();
 
@@ -34,8 +40,9 @@ namespace DiscordPainter
                 window.DispatchEvents();
                 window.Clear();
 
-                gui.Draw();
+                
                 canvas.Render(ref window);
+                gui.Draw();
 
                 window.Display();
             }
@@ -47,6 +54,38 @@ namespace DiscordPainter
             window.Close();
         }
 
+        private void Window_MouseButtonPressed(object sender, MouseButtonEventArgs e)
+        {
+            var window = (Window)sender;
+
+            // Just set the new start coords eveytime the Left mouse button is pressed
+            if (e.Button == Mouse.Button.Left)
+            {
+                pressed = true;
+                if (e.X < (Utils.WIDTH - Utils.GUI_WIDTH))
+                    canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
+            }
+        }
+
+        private void Window_MouseButtonReleased(object sender, MouseButtonEventArgs e)
+        {
+            var window = (Window)sender;
+
+            // Just set the new start coords eveytime the Left mouse button is pressed
+            if (e.Button == Mouse.Button.Left)
+            {
+                pressed = false;
+            }
+        }
+
+        private void Window_MouseMoved(object sender, SFML.Window.MouseMoveEventArgs e)
+        {
+            var window = (SFML.Window.Window)sender;
+
+            if (e.X < (Utils.WIDTH - Utils.GUI_WIDTH) && pressed)
+                canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
+        }
+
         public void CreateGUI()
         {
             if (gui != null)
@@ -54,9 +93,9 @@ namespace DiscordPainter
 
             var buttonWhite = new Button("White")
             {
-                Position = new Vector2f(Utils.WIDTH * 21 / 25, Utils.HEIGHT * 1 / 7),
-                Size = new Vector2f(Utils.WIDTH * 3 / 25, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.6 * Utils.HEIGHT / 10)
+                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 1 / 7),
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
+                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
             };
             gui.Add(buttonWhite);
 
@@ -64,29 +103,29 @@ namespace DiscordPainter
 
             var buttonBlack = new Button("Black")
             {
-                Position = new Vector2f(Utils.WIDTH * 21 / 25, Utils.HEIGHT * 2 / 7),
-                Size = new Vector2f(Utils.WIDTH * 3 / 25, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.6 * Utils.HEIGHT / 10)
+                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 2 / 7),
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
+                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
             };
             gui.Add(buttonBlack);
 
             buttonBlack.Pressed += (s, e) => SwitchColor(false);
 
-            var buttonNew = new Button("New Painting")
+            var buttonNew = new Button("New")
             {
-                Position = new Vector2f(Utils.WIDTH * 21 / 25, Utils.HEIGHT * 4 / 7),
-                Size = new Vector2f(Utils.WIDTH * 3 / 25, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.6 * Utils.HEIGHT / 10)
+                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 4 / 7),
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
+                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
             };
             gui.Add(buttonNew);
 
             buttonNew.Pressed += (s, e) => NewPaint();
 
-            var buttonOutput = new Button("Output Painting")
+            var buttonOutput = new Button("Output")
             {
-                Position = new Vector2f(Utils.WIDTH * 21 / 25, Utils.HEIGHT * 5 / 7),
-                Size = new Vector2f(Utils.WIDTH * 3 / 25, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.6 * Utils.HEIGHT / 10)
+                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 5 / 7),
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
+                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
             };
             gui.Add(buttonOutput);
 
@@ -94,9 +133,9 @@ namespace DiscordPainter
 
             var buttonQuit = new Button("Exit")
             {
-                Position = new Vector2f(Utils.WIDTH * 21 / 25, Utils.HEIGHT * 6 / 7),
-                Size = new Vector2f(Utils.WIDTH * 3 / 25, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.6 * Utils.HEIGHT / 10)
+                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 6 / 7),
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
+                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
             };
             gui.Add(buttonQuit);
 
@@ -110,12 +149,30 @@ namespace DiscordPainter
 
         public void OutputPaint()
         {
+            StringBuilder output = new StringBuilder();
+            
+            for (int i = 0; i < Utils.SIZE_MAP_X; i++)
+            {
+                for (int k = 0; k < Utils.SIZE_MAP_Y; k++)
+                {
+                    if (canvas.tiles[k][i] == 1)
+                    {
+                        output.Append(Utils.WHITE);
+                    }
+                    else
+                    {
+                        output.Append(Utils.BLACK);
+                    }
+                }
+                output.Append("\n");
+            }
 
+            Console.WriteLine(output);
         }
 
         public void NewPaint()
         {
-
+            canvas = new Canvas();
         }
 
     }
