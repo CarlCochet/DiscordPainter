@@ -62,8 +62,7 @@ namespace DiscordPainter
             if (e.Button == Mouse.Button.Left)
             {
                 pressed = true;
-                if (e.X < (Utils.WIDTH - Utils.GUI_WIDTH))
-                    canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
+                canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
             }
         }
 
@@ -82,7 +81,7 @@ namespace DiscordPainter
         {
             var window = (SFML.Window.Window)sender;
 
-            if (e.X < (Utils.WIDTH - Utils.GUI_WIDTH) && pressed)
+            if (pressed)
                 canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
         }
 
@@ -164,6 +163,9 @@ namespace DiscordPainter
                         output.Append(Utils.BLACK);
                     }
                 }
+                if (i == (Utils.SIZE_MAP_X / 2) - 1)
+                    output.Append("\n");
+
                 output.Append("\n");
             }
 

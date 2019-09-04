@@ -43,10 +43,12 @@ namespace DiscordPainter
 
         public void ChangePixel(int x, int y, bool color)
         {
-            if (color)
-                tiles[x][y] = 1;
-            else
-                tiles[x][y] = 0;
+            if (x < Utils.SIZE_MAP_X && x >= 0 && y < Utils.SIZE_MAP_Y && y >= 0) {
+                if (color)
+                    tiles[x][y] = 1;
+                else
+                    tiles[x][y] = 0;
+            }
         }
     }
 }

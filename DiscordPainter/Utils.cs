@@ -10,8 +10,8 @@ namespace DiscordPainter
         public const int WIDTH = 1000;
         public const int HEIGHT = 800;
 
-        public const int SIZE_MAP_X = 10;
-        public const int SIZE_MAP_Y = 10;
+        public const int SIZE_MAP_X = 14;
+        public const int SIZE_MAP_Y = 14;
 
         public const int GUI_WIDTH = 200;
 
