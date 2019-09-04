@@ -77,9 +77,9 @@ namespace DiscordPainter
             }
         }
 
-        private void Window_MouseMoved(object sender, SFML.Window.MouseMoveEventArgs e)
+        private void Window_MouseMoved(object sender, MouseMoveEventArgs e)
         {
-            var window = (SFML.Window.Window)sender;
+            var window = (Window)sender;
 
             if (pressed)
                 canvas.ChangePixel(e.X / Utils.SQUARE_SIZE, e.Y / Utils.SQUARE_SIZE, colorMode);
