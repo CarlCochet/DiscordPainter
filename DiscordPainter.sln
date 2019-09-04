@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordPainter", "DiscordPainter\DiscordPainter.csproj", "{DC7C085D-5059-4E68-9ABF-F2E33022C6C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC7C085D-5059-4E68-9ABF-F2E33022C6C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7C085D-5059-4E68-9ABF-F2E33022C6C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7C085D-5059-4E68-9ABF-F2E33022C6C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7C085D-5059-4E68-9ABF-F2E33022C6C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8AA8AE0-E649-4A0F-AD7E-2DCB22FE506F}
+	EndGlobalSection
+EndGlobal
