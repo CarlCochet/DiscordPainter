@@ -17,8 +17,16 @@ namespace DiscordPainter
 
         public const int SQUARE_SIZE = (WIDTH - GUI_WIDTH) / SIZE_MAP_X;
 
-        public const String BLACK = ":black_large_square:";
-        public const String WHITE = ":white_large_square:";
+        public static Dictionary<string, string> COLORS = new Dictionary<string, string>()
+        {
+            {"BLACK", ":black_large_square:" },
+            {"WHITE", ":white_large_square:" },
+            {"RED", ":u5408:" },
+            {"GREEN", ":u6307:" },
+            {"BLUE", ":one:" },
+            {"YELLOW", ":u7533:" },
+            {"PURPLE", ":u7a7a:" },
+        };
 
         // Creating a 2D array with a set value
         public static int[][] CreateMap(int width, int height, int value)

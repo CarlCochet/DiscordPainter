@@ -14,7 +14,7 @@ namespace DiscordPainter
     {
         private RenderWindow window;
         private Gui gui;
-        private bool colorMode;
+        private string colorMode;
         private Canvas canvas;
         private bool pressed;
 
@@ -90,25 +90,20 @@ namespace DiscordPainter
             if (gui != null)
                 gui.RemoveAllWidgets();
 
-            var buttonWhite = new Button("White")
+            var listColors = new ListBox()
             {
                 Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 1 / 7),
-                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
+                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT * 1 / 4),
+                TextSize = (uint)(0.25 * Utils.HEIGHT / 10)
             };
-            gui.Add(buttonWhite);
 
-            buttonWhite.Pressed += (s, e) => SwitchColor(true);
-
-            var buttonBlack = new Button("Black")
+            foreach (KeyValuePair<string, string> color in Utils.COLORS)
             {
-                Position = new Vector2f(Utils.WIDTH * 41 / 50, Utils.HEIGHT * 2 / 7),
-                Size = new Vector2f(Utils.WIDTH * 8 / 50, Utils.HEIGHT / 10),
-                TextSize = (uint)(0.5 * Utils.HEIGHT / 10)
-            };
-            gui.Add(buttonBlack);
-
-            buttonBlack.Pressed += (s, e) => SwitchColor(false);
+                listColors.AddItem(color.Key.ToString());
+            }
+            gui.Add(listColors);
+               
+            listColors.ItemSelected += (s, e) => SwitchColor(in listColors);
 
             var buttonNew = new Button("New")
             {
@@ -141,9 +136,9 @@ namespace DiscordPainter
             buttonQuit.Pressed += (s, e) => CloseWindow();
         }
 
-        public void SwitchColor(bool color)
+        public void SwitchColor(in ListBox listBox)
         {
-            colorMode = color;
+            colorMode = listBox.GetSelectedItem();
         }
 
         public void OutputPaint()
@@ -154,13 +149,31 @@ namespace DiscordPainter
             {
                 for (int k = 0; k < Utils.SIZE_MAP_Y; k++)
                 {
-                    if (canvas.tiles[k][i] == 1)
+                    switch (canvas.tiles[k][i])
                     {
-                        output.Append(Utils.WHITE);
-                    }
-                    else
-                    {
-                        output.Append(Utils.BLACK);
+                        case 0:
+                            output.Append(Utils.COLORS["BLACK"]);
+                            break;
+                        case 1:
+                            output.Append(Utils.COLORS["WHITE"]);
+                            break;
+                        case 2:
+                            output.Append(Utils.COLORS["RED"]);
+                            break;
+                        case 3:
+                            output.Append(Utils.COLORS["GREEN"]);
+                            break;
+                        case 4:
+                            output.Append(Utils.COLORS["BLUE"]);
+                            break;
+                        case 5:
+                            output.Append(Utils.COLORS["YELLOW"]);
+                            break;
+                        case 6:
+                            output.Append(Utils.COLORS["PURPLE"]);
+                            break;
+                        default:
+                            break;
                     }
                 }
                 if (i == (Utils.SIZE_MAP_X / 2) - 1)

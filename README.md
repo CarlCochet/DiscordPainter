@@ -1,5 +1,5 @@
 # DiscordPainter
-Simple tool to create black and white, 14x14, drawings for Discord (using large_square)
+Simple tool to create 14x14 drawings for Discord with 5 colors + Black & White (using square emojis)
 
 Editor:
 ![](q0XhdNEwEI.gif)
